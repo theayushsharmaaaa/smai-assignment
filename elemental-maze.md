@@ -6,7 +6,7 @@
 
 ## Problem Description
 
-The Elemental Maze is an innovative puzzle game that presents a unique state space search problem. In this game, players must navigate four elemental orbs (Fire, Water, Earth, and Air) through a complex maze-like environment to reach their respective goal locations. The challenge lies in managing the interactions between elements, utilizing special features of the maze, and coordinating the movement of multiple agents simultaneously.
+The Elemental Maze is an innovative puzzle game that presents a unique state space search problem. In this game, players must navigate four elemental orbs (Fire, Water, Earth, and Air) through a complex maze-like environment to reach their respective goal locations (Volcano, Lake, Mountain, Wind Tunnel). The challenge lies in managing the interactions between elements, utilizing special features of the maze, and coordinating the movement of multiple agents simultaneously.
 
 ## Domain Representation
 
