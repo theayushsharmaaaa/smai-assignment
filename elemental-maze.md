@@ -232,10 +232,12 @@ This interface allows users to:
 
 4. **Dynamic Environment**: The state of the maze can change as orbs move through it, adding a temporal aspect to the problem. For instance, a fire orb passing through might temporarily melt ice, creating new pathways.
 
-5. **Flexible Problem Definition**: Users can create varied and challenging mazes, making each instance of the problem unique. This flexibility allows for a wide range of difficulty levels and puzzle designs.
+5. **Flexible Problem Definition**: Users can create varied and challenging mazes, making each instance of the problem unique. This flexibility allows for a wide range of difficulty levels and puzzle designs within the 12x12 size limit, balancing complexity with manageability.
 
 6. **Constraint Satisfaction**: The need to place all orbs in their correct goal positions simultaneously adds a constraint satisfaction aspect to the problem.
 
 7. **Path Interdependence**: The optimal path for one orb may depend on the movements of the others, creating interdependencies that must be considered in the search strategy.
+
+8. **Scalable Complexity**: With maze sizes ranging from small grids to the maximum 12x12 dimension, the problem's complexity can scale significantly, allowing for both simple introductory puzzles and highly challenging configurations.
 
 The Elemental Maze presents a rich, complex state space search problem that combines elements of classic maze-solving with multi-agent coordination, special game mechanics, and dynamic environmental interactions. This unique combination of features sets it apart from common textbook examples and provides an engaging challenge for developing and testing search algorithms.
