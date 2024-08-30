@@ -1,5 +1,9 @@
 # The Elemental Maze: A Novel State Space Search Problem
 
+- **Course**: Search Methods in AI
+- **Assignment 1 Part 1**: State Space Search Representation
+- **Submitted by**: Ayush Sharma (U20220024) and Manjree Kothari (U20220104)
+
 ## Problem Description
 
 The Elemental Maze is an innovative puzzle game that presents a unique state space search problem. In this game, players must navigate four elemental orbs (Fire, Water, Earth, and Air) through a complex maze-like environment to reach their respective goal locations. The challenge lies in managing the interactions between elements, utilizing special features of the maze, and coordinating the movement of multiple agents simultaneously.
