@@ -1,4 +1,4 @@
-# The Elemental Maze: A Novel State Space Search Problem
+# The Elemental Maze: A State Space Search Problem
 
 - **Course**: Search Methods in AI
 - **Assignment 1 Part 1**: State Space Search Representation
