@@ -21,6 +21,7 @@ The state of the Elemental Maze is represented by:
 
 ### State Representation:
 ```python
+# 5x5 grid
 state = (
     [
         ['#', '#', '#', '#', '#'],
@@ -34,6 +35,30 @@ state = (
         'W': (3, 3),  # Water orb at (3, 3)
         'E': (2, 1),  # Earth orb at (2, 1)
         'A': (3, 1)   # Air orb at (3, 1)
+    }
+)
+```
+
+```python
+# 10x10 grid
+state = (
+    [
+        ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],
+        ['#', 'O', '.', '.', 'P', '.', '.', '.', 'V', '#'],
+        ['#', '.', '#', '#', '#', '.', '#', '#', '.', '#'],
+        ['#', '.', '.', '.', '.', '.', '.', 'P', '.', '#'],
+        ['#', '#', '#', '.', '#', '#', '#', '#', '.', '#'],
+        ['#', 'L', '.', '.', '.', '.', '.', '.', '.', '#'],
+        ['#', '#', '#', '.', '#', '#', '#', '#', '.', '#'],
+        ['#', '.', 'P', '.', '.', '.', '.', '.', '.', '#'],
+        ['#', 'M', '#', '#', '#', '.', '#', '#', 'T', '#'],
+        ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#']
+    ],
+    {
+        'F': (1, 1),  # Fire orb at (1, 1)
+        'W': (5, 1),  # Water orb at (5, 1)
+        'E': (8, 1),  # Earth orb at (8, 1)
+        'A': (7, 7)   # Air orb at (7, 7)
     }
 )
 ```
@@ -122,28 +147,57 @@ To allow users to specify the initial state and goal, we implement a simple inte
 ```python
 def create_maze():
     print("Enter the maze layout (use '#' for walls, '.' for empty spaces, 'O' for nodes, 'P' for portals):")
+    print("Maximum grid size is 12x12. Enter an empty line to finish.")
     maze = []
     while True:
         row = input()
         if row == "":
             break
+        if len(maze) >= 12 or len(row) > 12:
+            print("Error: Maximum grid size exceeded. Please keep it within 12x12.")
+            return create_maze()  # Restart the input process
         maze.append(list(row))
+    
+    if len(maze) == 0 or len(maze[0]) == 0:
+        print("Error: The maze cannot be empty.")
+        return create_maze()  # Restart the input process
+    
+    if not all(len(row) == len(maze[0]) for row in maze):
+        print("Error: All rows must have the same length.")
+        return create_maze()  # Restart the input process
+    
     return maze
 
 def place_orbs_and_goals(maze):
     orb_positions = {}
     elements = {'F': 'Fire', 'W': 'Water', 'E': 'Earth', 'A': 'Air'}
     goal_types = {'V': 'volcano', 'L': 'lake', 'M': 'mountain', 'T': 'wind tunnel'}
-    
+
     for element, name in elements.items():
-        x, y = map(int, input(f"Enter {name} orb position (x y): ").split())
-        orb_positions[element] = (x, y)
-        maze[x][y] = element
-    
+        while True:
+            try:
+                x, y = map(int, input(f"Enter {name} orb position (x y): ").split())
+                if 0 <= x < len(maze) and 0 <= y < len(maze[0]) and maze[x][y] in ['.', 'O']:
+                    orb_positions[element] = (x, y)
+                    maze[x][y] = element
+                    break
+                else:
+                    print("Invalid position. Please try again.")
+            except ValueError:
+                print("Invalid input. Please enter two integers separated by a space.")
+
     for goal, name in goal_types.items():
-        x, y = map(int, input(f"Enter {name} position (x y): ").split())
-        maze[x][y] = goal
-    
+        while True:
+            try:
+                x, y = map(int, input(f"Enter {name} position (x y): ").split())
+                if 0 <= x < len(maze) and 0 <= y < len(maze[0]) and maze[x][y] == '.':
+                    maze[x][y] = goal
+                    break
+                else:
+                    print("Invalid position. Please try again.")
+            except ValueError:
+                print("Invalid input. Please enter two integers separated by a space.")
+
     return maze, orb_positions
 
 # Usage
