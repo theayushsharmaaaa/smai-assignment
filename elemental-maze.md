@@ -212,8 +212,11 @@ initial_state = (maze, initial_orb_positions)
 
 This interface allows users to:
 1. Define the maze layout
-2. Specify initial positions for each elemental orb
-3. Set the locations for each goal (volcano, lake, mountain, wind tunnel)
+2. Limits the maximum grid size to 12x12
+3. Checks for empty mazes and inconsistent row lengths
+4. Specify initial positions for each elemental orb
+5. Set the locations for each goal (volcano, lake, mountain, wind tunnel)
+6. Ensures orbs and goals are placed on valid positions
 
 ## Unique Aspects and Challenges
 
