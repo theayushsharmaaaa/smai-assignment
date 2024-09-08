@@ -5,13 +5,22 @@
 - **Submitted by**: Ayush Sharma (U20220024) and Manjree Kothari (U20220104)
 
 ## Depth First Search
-### Implementation
-### Performance
+### Implementation:
+
+### Performance:
+Time complexity:
+Space complexity:
 
 ## Breadth First Search
-### Implementation
-### Performance
+### Implementation:
+
+### Performance:
+TIme complexity:
+Space complexity:
 
 ## Best First Search
-### Implementation
-### Performance
+### Implementation:
+
+### Performance:
+TIme complexity:
+Space complexity:
