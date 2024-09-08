@@ -1,8 +1,12 @@
-# The Elemental Maze: A Novel State Space Search Problem
+# The Elemental Maze: A State Space Search Problem
+
+- **Course**: Search Methods in AI
+- **Assignment 1 Part 1**: State Space Search Representation
+- **Submitted by**: Ayush Sharma (U20220024) and Manjree Kothari (U20220104)
 
 ## Problem Description
 
-The Elemental Maze is an innovative puzzle game that presents a unique state space search problem. In this game, players must navigate four elemental orbs (Fire, Water, Earth, and Air) through a complex maze-like environment to reach their respective goal locations. The challenge lies in managing the interactions between elements, utilizing special features of the maze, and coordinating the movement of multiple agents simultaneously.
+The Elemental Maze is an innovative puzzle game that presents a unique state space search problem. In this game, players must navigate four elemental orbs (Fire, Water, Earth, and Air) through a complex maze-like environment to reach their respective goal locations (Volcano, Lake, Mountain, Wind Tunnel). The challenge lies in managing the interactions between elements, utilizing special features of the maze, and coordinating the movement of multiple agents simultaneously.
 
 ## Domain Representation
 
@@ -21,6 +25,7 @@ The state of the Elemental Maze is represented by:
 
 ### State Representation:
 ```python
+# 5x5 grid
 state = (
     [
         ['#', '#', '#', '#', '#'],
@@ -34,6 +39,30 @@ state = (
         'W': (3, 3),  # Water orb at (3, 3)
         'E': (2, 1),  # Earth orb at (2, 1)
         'A': (3, 1)   # Air orb at (3, 1)
+    }
+)
+```
+
+```python
+# 10x10 grid
+state = (
+    [
+        ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],
+        ['#', 'O', '.', '.', 'P', '.', '.', '.', 'V', '#'],
+        ['#', '.', '#', '#', '#', '.', '#', '#', '.', '#'],
+        ['#', '.', '.', '.', '.', '.', '.', 'P', '.', '#'],
+        ['#', '#', '#', '.', '#', '#', '#', '#', '.', '#'],
+        ['#', 'L', '.', '.', '.', '.', '.', '.', '.', '#'],
+        ['#', '#', '#', '.', '#', '#', '#', '#', '.', '#'],
+        ['#', '.', 'P', '.', '.', '.', '.', '.', '.', '#'],
+        ['#', 'M', '#', '#', '#', '.', '#', '#', 'T', '#'],
+        ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#']
+    ],
+    {
+        'F': (1, 1),  # Fire orb at (1, 1)
+        'W': (5, 1),  # Water orb at (5, 1)
+        'E': (8, 1),  # Earth orb at (8, 1)
+        'A': (7, 7)   # Air orb at (7, 7)
     }
 )
 ```
@@ -122,28 +151,57 @@ To allow users to specify the initial state and goal, we implement a simple inte
 ```python
 def create_maze():
     print("Enter the maze layout (use '#' for walls, '.' for empty spaces, 'O' for nodes, 'P' for portals):")
+    print("Maximum grid size is 12x12. Enter an empty line to finish.")
     maze = []
     while True:
         row = input()
         if row == "":
             break
+        if len(maze) >= 12 or len(row) > 12:
+            print("Error: Maximum grid size exceeded. Please keep it within 12x12.")
+            return create_maze()  # Restart the input process
         maze.append(list(row))
+    
+    if len(maze) == 0 or len(maze[0]) == 0:
+        print("Error: The maze cannot be empty.")
+        return create_maze()  # Restart the input process
+    
+    if not all(len(row) == len(maze[0]) for row in maze):
+        print("Error: All rows must have the same length.")
+        return create_maze()  # Restart the input process
+    
     return maze
 
 def place_orbs_and_goals(maze):
     orb_positions = {}
     elements = {'F': 'Fire', 'W': 'Water', 'E': 'Earth', 'A': 'Air'}
     goal_types = {'V': 'volcano', 'L': 'lake', 'M': 'mountain', 'T': 'wind tunnel'}
-    
+
     for element, name in elements.items():
-        x, y = map(int, input(f"Enter {name} orb position (x y): ").split())
-        orb_positions[element] = (x, y)
-        maze[x][y] = element
-    
+        while True:
+            try:
+                x, y = map(int, input(f"Enter {name} orb position (x y): ").split())
+                if 0 <= x < len(maze) and 0 <= y < len(maze[0]) and maze[x][y] in ['.', 'O']:
+                    orb_positions[element] = (x, y)
+                    maze[x][y] = element
+                    break
+                else:
+                    print("Invalid position. Please try again.")
+            except ValueError:
+                print("Invalid input. Please enter two integers separated by a space.")
+
     for goal, name in goal_types.items():
-        x, y = map(int, input(f"Enter {name} position (x y): ").split())
-        maze[x][y] = goal
-    
+        while True:
+            try:
+                x, y = map(int, input(f"Enter {name} position (x y): ").split())
+                if 0 <= x < len(maze) and 0 <= y < len(maze[0]) and maze[x][y] == '.':
+                    maze[x][y] = goal
+                    break
+                else:
+                    print("Invalid position. Please try again.")
+            except ValueError:
+                print("Invalid input. Please enter two integers separated by a space.")
+
     return maze, orb_positions
 
 # Usage
@@ -154,8 +212,11 @@ initial_state = (maze, initial_orb_positions)
 
 This interface allows users to:
 1. Define the maze layout
-2. Specify initial positions for each elemental orb
-3. Set the locations for each goal (volcano, lake, mountain, wind tunnel)
+2. Limits the maximum grid size to 12x12
+3. Checks for empty mazes and inconsistent row lengths
+4. Specify initial positions for each elemental orb
+5. Set the locations for each goal (volcano, lake, mountain, wind tunnel)
+6. Ensures orbs and goals are placed on valid positions
 
 ## Unique Aspects and Challenges
 
@@ -171,10 +232,12 @@ This interface allows users to:
 
 4. **Dynamic Environment**: The state of the maze can change as orbs move through it, adding a temporal aspect to the problem. For instance, a fire orb passing through might temporarily melt ice, creating new pathways.
 
-5. **Flexible Problem Definition**: Users can create varied and challenging mazes, making each instance of the problem unique. This flexibility allows for a wide range of difficulty levels and puzzle designs.
+5. **Flexible Problem Definition**: Users can create varied and challenging mazes, making each instance of the problem unique. This flexibility allows for a wide range of difficulty levels and puzzle designs within the 12x12 size limit, balancing complexity with manageability.
 
 6. **Constraint Satisfaction**: The need to place all orbs in their correct goal positions simultaneously adds a constraint satisfaction aspect to the problem.
 
 7. **Path Interdependence**: The optimal path for one orb may depend on the movements of the others, creating interdependencies that must be considered in the search strategy.
+
+8. **Scalable Complexity**: With maze sizes ranging from small grids to the maximum 12x12 dimension, the problem's complexity can scale significantly, allowing for both simple introductory puzzles and highly challenging configurations.
 
 The Elemental Maze presents a rich, complex state space search problem that combines elements of classic maze-solving with multi-agent coordination, special game mechanics, and dynamic environmental interactions. This unique combination of features sets it apart from common textbook examples and provides an engaging challenge for developing and testing search algorithms.
