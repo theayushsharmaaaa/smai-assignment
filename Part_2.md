@@ -9,75 +9,81 @@ The Elemental Maze is a challenging puzzle that serves as a platform for explori
 
 Our objective is to provide a comprehensive understanding of how these search algorithms operate within the context of the Elemental Maze problem. We will examine their implementations, step through example scenarios, and compare their performance characteristics. This analysis will shed light on the strengths and weaknesses of each approach, offering insights into which algorithm might be most suitable under various circumstances.
 
-## Breadth First Search/;
+## Breadth First Search
 Implementation:
+
 The BFS class inherits from ElementalMazeSearch and implements the search method. Here's how it works:
-a. Initialization:
-  - A queue is initialized with the starting orb positions.
-  - A visited set is used to keep track of explored states.
-  - A parent dictionary is used to reconstruct the path.
 
-b. Main Loop:
-While the queue is not empty:
-  - Dequeue the next state (current_positions).
-  - Check if it's the goal state using isGoal().
-  - If it's the goal, reconstruct and return the path.
-  - If not, generate all possible next states using moveGen().
-  - For each new state:
-    - If not visited, add to the queue, mark as visited, and update the parent.
-
-c. Path Reconstruction:
-  - If a goal is found, backtrack using the parent dictionary to construct the path.
-
-## Depth First Search:
-Implementation:
-The DFS class, like the BFS class, inherits from ElementalMazeSearch and implements the search method. Here's how it works:
 1. Initialization:
-  - A stack is initialized with the starting orb positions.
-  - A visited set is used to keep track of explored states.
-  - A parent dictionary is used to reconstruct the path.
+    - A queue is initialized with the starting orb positions.
+    - A visited set is used to keep track of explored states.
+    - A parent dictionary is used to reconstruct the path.
+
+2. Main Loop:
+While the queue is not empty:
+    - Dequeue the next state (current_positions).
+    - Check if it's the goal state using isGoal().
+    - If it's the goal, reconstruct and return the path.
+    - If not, generate all possible next states using moveGen().
+    - For each new state:
+      - If not visited, add to the queue, mark as visited, and update the parent.
+
+3. Path Reconstruction:
+    - If a goal is found, backtrack using the parent dictionary to construct the path.
+
+## Depth First Search
+Implementation:
+
+The DFS class, like the BFS class, inherits from ElementalMazeSearch and implements the search method. Here's how it works:
+
+1. Initialization:
+    - A stack is initialized with the starting orb positions.
+    - A visited set is used to keep track of explored states.
+    - A parent dictionary is used to reconstruct the path.
 
 2. Main Loop:
 While the stack is not empty:
-  - Pop the next state (current_positions) from the stack.
-  - Check if it's the goal state using isGoal().
-  - If it's the goal, reconstruct and return the path.
-  - If not, generate all possible next states using moveGen().
-  - For each new state:
-    - If not visited, add to the stack, mark as visited, and update the parent.
+    - Pop the next state (current_positions) from the stack.
+    - Check if it's the goal state using isGoal().
+    - If it's the goal, reconstruct and return the path.
+    - If not, generate all possible next states using moveGen().
+    - For each new state:
+      - If not visited, add to the stack, mark as visited, and update the parent.
 
 3. Path Reconstruction:
    - If a goal is found, backtrack using the parent dictionary to construct the path.
 
-## Best First Search:
+## Best First Search
 Implementation:
+
 The BestFirstSearch class inherits from ElementalMazeSearch and implements the search method along with a heuristic function. Here's how it works:
+
 1. Heuristic Function:
-  - The heuristic() method calculates the estimated cost to reach the goal from a given state.
-  - It sums the Manhattan distances between each orb and its corresponding goal.
+    - The heuristic() method calculates the estimated cost to reach the goal from a given state.
+    - It sums the Manhattan distances between each orb and its corresponding goal.
 
 2. Initialization:
-  - A priority queue (pq) is initialized with the starting orb positions, prioritized by the heuristic value.
-  - A visited set is used to keep track of explored states.
-  - A parent dictionary is used to reconstruct the path.
-  - A counter is used to break ties in the priority queue.
+    - A priority queue (pq) is initialized with the starting orb positions, prioritized by the heuristic value.
+    - A visited set is used to keep track of explored states.
+    - A parent dictionary is used to reconstruct the path.
+    - A counter is used to break ties in the priority queue.
 
 3. Main Loop:
 While the priority queue is not empty:
-  - Pop the state with the lowest heuristic value (current_positions).
-  - Check if it's the goal state using isGoal().
-  - If it's the goal, reconstruct and return the path.
-  - If not, generate all possible next states using moveGen().
-  - For each new state:
-    - If not visited, calculate its heuristic value, add to the priority queue, mark as visited, and update the parent.
+    - Pop the state with the lowest heuristic value (current_positions).
+    - Check if it's the goal state using isGoal().
+    - If it's the goal, reconstruct and return the path.
+    - If not, generate all possible next states using moveGen().
+    - For each new state:
+      - If not visited, calculate its heuristic value, add to the priority queue, mark as visited, and update the parent.
 
 4. Path Reconstruction:
-  - If a goal is found, backtrack using the parent dictionary to construct the path.
-
+    - If a goal is found, backtrack using the parent dictionary to construct the path.
 
 ## Example Implementation:
-## Example 1:
+
 ```python
+# Example 1
 maze = [
     ['#', '#', '#', '#', '#', '#', '#'],
     ['#', '.', '.', '.', '.', 'V', '#'],
@@ -97,16 +103,16 @@ orb_positions = {
 ```
 ### Breadth First Search:
 1. Start with the initial state: {F: (1,1), W: (3,1), E: (5,1), A: (3,3)}
-  - Add this state to the queue and mark it as visited.
+    - Add this state to the queue and mark it as visited.
 2. Dequeue the first state and generate all possible moves:
-  - F can move to (1,2)
-  - W can move to (3,2)
-  - E can move to (5,2)
-  - A can move to (3,2), (3,4), or use the portal to (3,3)
+    - F can move to (1,2)
+    - W can move to (3,2)
+    - E can move to (5,2)
+    - A can move to (3,2), (3,4), or use the portal to (3,3)
 Add all these new states to the queue.
 3. Dequeue the next state (where F moved to (1,2)) and generate all possible moves:
-  - F can move to (1,3)
-  - W, E, A remain the same as the initial state
+    - F can move to (1,3)
+    - W, E, A remain the same as the initial state
 Add this new state to the queue.
 4. Continue this process, exploring all possible single moves before considering any double moves.
 
@@ -114,13 +120,13 @@ BFS will systematically explore the maze level by level, ensuring it finds the s
 
 ### Depth First Search:
 1. Start with the initial state: {F: (1,1), W: (3,1), E: (5,1), A: (3,3)}
-  - Push this state onto the stack and mark it as visited.
+    - Push this state onto the stack and mark it as visited.
 2. Pop the top state and generate all possible moves (same as BFS Step 2).
-  - Push all these new states onto the stack.
+    - Push all these new states onto the stack.
 3. Pop the top state (likely the last one pushed in Step 2, where A used the portal).
 Generate all possible moves from this state:
-  - F, W, E remain in their initial positions
-  - can move to (3,2) or (3,4)
+    - F, W, E remain in their initial positions
+    - can move to (3,2) or (3,4)
 Push these new states onto the stack.
 4. Continue this process, always exploring the most recently discovered state first.
 
@@ -128,26 +134,28 @@ DFS will dive deep into one particular path before backtracking to explore alter
 
 ### Best First Search:
 1. Start with the initial state: {F: (1,1), W: (3,1), E: (5,1), A: (3,3)}
-  Calculate the heuristic value:
-  - F to V: |1-1| + |1-5| = 4
-  - W to L: |3-3| + |1-5| = 4
-  - E to M: |5-5| + |1-1| = 0
-  - A to T: |3-5| + |3-5| = 4
-  - Total heuristic: 4 + 4 + 0 + 4 = 12
+
+Calculate the heuristic value:
+  - **F to V**: \|1 - 1\| + \|1 - 5\| = 4
+  - **W to L**: \|3 - 3\| + \|1 - 5\| = 4
+  - **E to M**: \|5 - 5\| + \|1 - 1\| = 0
+  - **A to T**: \|3 - 5\| + \|3 - 5\| = 4
+  - **Total heuristic**: 4 + 4 + 0 + 4 = 12
+
 Add this state to the priority queue with its heuristic value.
 2. Pop the state with the lowest heuristic value (which is the initial state).
-  - Generate all possible moves (same as BFS Step 2).
-  - Calculate the heuristic value for each new state and add to the priority queue.
+    - Generate all possible moves (same as BFS Step 2).
+    - Calculate the heuristic value for each new state and add to the priority queue.
 3. Pop the state with the lowest heuristic value. This is likely to be a state where E moved to (5,2), as it's already at its goal column.
-  - Generate all possible moves from this state.
-  - Calculate the heuristic value for each new state and add to the priority queue.
+    - Generate all possible moves from this state.
+    - Calculate the heuristic value for each new state and add to the priority queue.
 4. Continue this process, always exploring the state with the lowest heuristic value next.
 
 Best-First Search will prioritize moves that seem to bring the orbs closer to their goals. In this maze, it's likely to focus on moving E to its goal first, then possibly F or W (as they're further from their goals), and finally A.
 
 
-## Example 2:
 ```python
+# Example 2
 maze = [
     ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],
     ['#', '.', '.', '.', '#', '.', '.', '.', 'V', '#'],
@@ -209,9 +217,9 @@ The BFS approach ensures that the shortest path (in terms of the number of moves
   d. Push all these new states onto the stack if they haven't been visited.
 4. Continue this process, expanding the search depth-first.
 5. The search will explore moving one orb as far as possible before considering moves for the other orbs:
-  - It might first try to move Fire (F) all the way to its goal V at (1,8)
-  - Then it could backtrack and try different paths for Fire
-  - Only after exhausting Fire's possibilities would it start moving Water (W) significantly
+    - It might first try to move Fire (F) all the way to its goal V at (1,8)
+    - Then it could backtrack and try different paths for Fire
+    - Only after exhausting Fire's possibilities would it start moving Water (W) significantly
 6. The search will consider using the portals at (3,7) and (5,4) when orbs reach these positions, potentially leading to deep explorations through portal paths.
 7. The process continues until a state is found where all orbs are in their goal positions, or until all possibilities have been exhausted.
 8. Once the goal state is reached, the path is reconstructed using the parent dictionary.
@@ -223,11 +231,11 @@ In this specific example, DFS might find a different solution than BFS, and it m
 ### Best First Search:
 1. Start with the initial state: {F: (1,1), W: (3,1), E: (5,1), A: (7,1)}
 2. Calculate the heuristic value for this state:
-  - F to V: |1-1| + |1-8| = 7
-  - W to L: |3-7| + |1-8| = 11
-  - E to M: |5-7| + |1-1| = 2
-  - A to T: |7-9| + |1-1| = 2
-  - Total heuristic: 7 + 11 + 2 + 2 = 22
+  - **F to V**: \|1 - 1\| + \|1 - 8\| = 7
+  - **W to L**: \|3 - 7\| + \|1 - 8\| = 11
+  - **E to M**: \|5 - 7\| + \|1 - 1\| = 2
+  - **A to T**: \|7 - 9\| + \|1 - 1\| = 2
+  - **Total heuristic**: 7 + 11 + 2 + 2 = 22
 3. Add this state to the priority queue with its heuristic value.
 4. Begin the main loop:
   a. Pop the state with the lowest heuristic value from the priority queue.
@@ -238,9 +246,9 @@ In this specific example, DFS might find a different solution than BFS, and it m
     - Add to the priority queue if not visited.
 5. Continue this process, always exploring the state with the lowest heuristic value next.
 6. The search will tend to prioritize moves that bring orbs closer to their goals:
-  - It might first focus on moving Earth (E) to M and Air (A) to T, as they're closest to their goals.
-  - Then it could focus on Fire (F) moving towards V.
-  - Water (W) might be moved last as it's furthest from its goal.
+    - It might first focus on moving Earth (E) to M and Air (A) to T, as they're closest to their goals.
+    - Then it could focus on Fire (F) moving towards V.
+    - Water (W) might be moved last as it's furthest from its goal.
 7. The search will consider using the portals at (3,7) and (5,4) when orbs reach these positions, potentially leading to significant heuristic improvements.
 8. The process continues until a state is found where all orbs are in their goal positions, or until all possibilities have been exhausted.
 9. Once the goal state is reached, the path is reconstructed using the parent dictionary.
@@ -249,7 +257,7 @@ In this specific example, Best-First Search might find a solution more quickly t
 The use of Manhattan distance in the heuristic is particularly suitable for this maze, as it reflects the grid-like movement of the orbs. However, it doesn't account for walls or portals, which might lead to some inaccuracies in state evaluation.
 
 ## Comparison of performance
-### Breadth First Search:
+### 1. Breadth First Search:
 
 - **Data structure**: Queue (implemented using deque)
 - **Time complexity**: O(b^d), where b is the branching factor and d is the depth of the shallowest solution
@@ -257,7 +265,7 @@ The use of Manhattan distance in the heuristic is particularly suitable for this
 - **Completeness**: Complete (will find a solution if one exists)
 - **Optimality**: Optimal for unweighted graphs (finds the shortest path in terms of number of steps)
 
-### Depth First Search:
+### 2. Depth First Search:
 
 - **Data structure**: Stack
 - **Time complexity**: O(b^m), where b is the branching factor and m is the maximum depth of the search tree
@@ -265,7 +273,7 @@ The use of Manhattan distance in the heuristic is particularly suitable for this
 - **Completeness**: Not complete in infinite spaces, but complete in finite spaces
 - **Optimality**: Not optimal (may find a solution that is not the shortest path)
 
-### Best First Search:
+### 3. Best First Search:
 
 - **Data structure**: Priority Queue (implemented using heapq)
 - **Time complexity**: O(b^m), where b is the branching factor and m is the maximum depth of the search tree
