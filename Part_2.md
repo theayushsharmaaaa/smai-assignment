@@ -5,9 +5,12 @@
 - **Submitted by**: Ayush Sharma (U20220024) and Manjree Kothari (U20220104)
 
 ## Introduction
+The Elemental Maze is a challenging puzzle that serves as a platform for exploring and comparing different state space search algorithms. In this report, we delve into the implementation and analysis of three fundamental search strategies: Breadth First Search (BFS), Depth First Search (DFS), and Best First Search. Each of these algorithms offers unique approaches to navigating the maze, moving elemental orbs to their respective goal positions while adhering to the constraints of the puzzle.
 
-## Breadth First Search
-### Implementation:
+Our objective is to provide a comprehensive understanding of how these search algorithms operate within the context of the Elemental Maze problem. We will examine their implementations, step through example scenarios, and compare their performance characteristics. This analysis will shed light on the strengths and weaknesses of each approach, offering insights into which algorithm might be most suitable under various circumstances.
+
+## Breadth First Search/;
+Implementation:
 The BFS class inherits from ElementalMazeSearch and implements the search method. Here's how it works:
 a. Initialization:
   - A queue is initialized with the starting orb positions.
@@ -26,9 +29,8 @@ While the queue is not empty:
 c. Path Reconstruction:
   - If a goal is found, backtrack using the parent dictionary to construct the path.
 
-
-## Depth First Search
-### Implementation:
+## Depth First Search:
+Implementation:
 The DFS class, like the BFS class, inherits from ElementalMazeSearch and implements the search method. Here's how it works:
 1. Initialization:
   - A stack is initialized with the starting orb positions.
@@ -47,9 +49,8 @@ While the stack is not empty:
 3. Path Reconstruction:
    - If a goal is found, backtrack using the parent dictionary to construct the path.
 
-
-## Best First Search
-### Implementation:
+## Best First Search:
+Implementation:
 The BestFirstSearch class inherits from ElementalMazeSearch and implements the search method along with a heuristic function. Here's how it works:
 1. Heuristic Function:
   - The heuristic() method calculates the estimated cost to reach the goal from a given state.
@@ -94,7 +95,7 @@ orb_positions = {
     'A': (3, 3)   # Air orb
 }
 ```
-### Breadth First Search
+### Breadth First Search:
 1. Start with the initial state: {F: (1,1), W: (3,1), E: (5,1), A: (3,3)}
   - Add this state to the queue and mark it as visited.
 2. Dequeue the first state and generate all possible moves:
@@ -111,7 +112,7 @@ Add this new state to the queue.
 
 BFS will systematically explore the maze level by level, ensuring it finds the shortest path to the goal state.
 
-### Depth First Search
+### Depth First Search:
 1. Start with the initial state: {F: (1,1), W: (3,1), E: (5,1), A: (3,3)}
   - Push this state onto the stack and mark it as visited.
 2. Pop the top state and generate all possible moves (same as BFS Step 2).
@@ -125,7 +126,7 @@ Push these new states onto the stack.
 
 DFS will dive deep into one particular path before backtracking to explore alternatives. It might find a solution quickly if it luckily chooses the right path, but it's not guaranteed to find the shortest solution.
 
-### Best First Search
+### Best First Search:
 1. Start with the initial state: {F: (1,1), W: (3,1), E: (5,1), A: (3,3)}
   Calculate the heuristic value:
   - F to V: |1-1| + |1-5| = 4
@@ -169,9 +170,7 @@ orb_positions = {
 }
 ```
 
-### Breadth First Search
-Step-by-step BFS process:
-
+### Breadth First Search:
 1. Start with the initial state: {F: (1,1), W: (3,1), E: (5,1), A: (7,1)}
 2. Add this state to the queue and mark it as visited.
 3. Begin the main loop:
@@ -196,9 +195,7 @@ Once the goal state is reached, the path is reconstructed using the parent dicti
 
 The BFS approach ensures that the shortest path (in terms of the number of moves) is found. However, for complex mazes like this one, the search space can become very large, potentially leading to long execution times or high memory usage.
 
-### Depth First Search
-Step-by-step DFS process:
-
+### Depth First Search:
 1. Start with the initial state: {F: (1,1), W: (3,1), E: (5,1), A: (7,1)}
 2. Push this state onto the stack and mark it as visited.
 3. Begin the main loop:
@@ -223,9 +220,7 @@ Depth-First Search (DFS) is a memory-efficient search algorithm, especially suit
 
 In this specific example, DFS might find a different solution than BFS, and it might take a very different amount of time to find it, depending on how the search space is structured and which direction it explores first.
 
-### Best First Search
-Step-by-step Best-First Search process:
-
+### Best First Search:
 1. Start with the initial state: {F: (1,1), W: (3,1), E: (5,1), A: (7,1)}
 2. Calculate the heuristic value for this state:
   - F to V: |1-1| + |1-8| = 7
@@ -256,27 +251,27 @@ The use of Manhattan distance in the heuristic is particularly suitable for this
 ## Comparison of performance
 ### Breadth First Search:
 
-- Data structure: Queue (implemented using deque)
-- Time complexity: O(b^d), where b is the branching factor and d is the depth of the shallowest solution
-- Space complexity: O(b^d)
-- Completeness: Complete (will find a solution if one exists)
-- Optimality: Optimal for unweighted graphs (finds the shortest path in terms of number of steps)
+- **Data structure**: Queue (implemented using deque)
+- **Time complexity**: O(b^d), where b is the branching factor and d is the depth of the shallowest solution
+- **Space complexity**: O(b^d)
+- **Completeness**: Complete (will find a solution if one exists)
+- **Optimality**: Optimal for unweighted graphs (finds the shortest path in terms of number of steps)
 
 ### Depth First Search:
 
-- Data structure: Stack
-- Time complexity: O(b^m), where b is the branching factor and m is the maximum depth of the search tree
-- Space complexity: O(bm), where b is the branching factor and m is the maximum depth
-- Completeness: Not complete in infinite spaces, but complete in finite spaces
-- Optimality: Not optimal (may find a solution that is not the shortest path)
+- **Data structure**: Stack
+- **Time complexity**: O(b^m), where b is the branching factor and m is the maximum depth of the search tree
+- **Space complexity**: O(bm), where b is the branching factor and m is the maximum depth
+- **Completeness**: Not complete in infinite spaces, but complete in finite spaces
+- **Optimality**: Not optimal (may find a solution that is not the shortest path)
 
 ### Best First Search:
 
-- Data structure: Priority Queue (implemented using heapq)
-- Time complexity: O(b^m), where b is the branching factor and m is the maximum depth of the search tree
-- Space complexity: O(b^m), storing all generated nodes
-- Completeness: Not complete (can get stuck in infinite loops if not implemented with cycle detection)
-- Optimality: Not guaranteed to be optimal, depends on the heuristic function
+- **Data structure**: Priority Queue (implemented using heapq)
+- **Time complexity**: O(b^m), where b is the branching factor and m is the maximum depth of the search tree
+- **Space complexity**: O(b^m), storing all generated nodes
+- **Completeness**: Not complete (can get stuck in infinite loops if not implemented with cycle detection)
+- **Optimality**: Not guaranteed to be optimal, depends on the heuristic function
 
 ### Key differences:
 - BFS explores all nodes at the current depth before moving to the next level, while DFS explores as far as possible along each branch before backtracking. Best-First Search explores nodes based on a heuristic function.
@@ -289,3 +284,10 @@ In the context of the Elemental Maze problem:
 - BFS will find the shortest solution path but might be slower for large mazes.
 - DFS might find a solution quickly but not necessarily the shortest one.
 - Best-First Search could potentially find a good solution quickly if the heuristic (Manhattan distance to goals) is effective for the specific maze layout.
+
+## Conclusion
+The Elemental Maze problem provides a rich environment for exploring the nuances of different search algorithms. Through our implementation and analysis of Breadth First Search, Depth First Search, and Best First Search, we've gained valuable insights into how these algorithms perform in a complex state space.
+
+Breadth First Search, with its guarantee of finding the optimal solution, proves to be the most reliable choice when the shortest path is crucial. However, its memory requirements can be substantial, especially in large mazes. Depth First Search offers a memory-efficient alternative, potentially finding solutions quickly in certain maze configurations, but without the guarantee of optimality. Best First Search, guided by our heuristic function, strikes a balance between the two, often finding good solutions efficiently, though not always the optimal one.
+
+The choice of algorithm ultimately depends on the specific requirements of the problem at hand. If memory is constrained but a solution must be found, DFS might be preferable. For scenarios where the optimal solution is necessary and memory is not a concern, BFS is the clear choice. In large, complex mazes where a good solution is needed quickly, Best First Search could be the most effective approach.
